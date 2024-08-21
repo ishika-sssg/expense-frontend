@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import '../dio.dart';
 import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'dart:convert';
@@ -158,7 +159,7 @@ class ExpenseDetails{
     }on DioException catch (e) {
       if (e.response != null) {
         // Server error
-        print('from dio exception ${e.response}');
+        debugPrint('from dio exception ${e.response}');
         var err = e.response;
         print('from api the error is $err');
         return err;
@@ -172,6 +173,51 @@ class ExpenseDetails{
 
   }
 
+  Future <dynamic> GetAllSettlementRecord(String user_id)async{
 
+    try{
+      var mytoken = await _authStorage.getToken('token');
+
+      Response res = await api.dio.get(
+        "http://localhost:8080/expense/allsettlements/user_id/$user_id",
+        options: Options(
+          headers: {'Authorization': 'Bearer $mytoken',
+            'Content-Type': 'application/json',
+          },
+          validateStatus: (status) {
+            // Accept all status codes to handle them manually
+            return status != null && status < 500;
+          },
+        ),
+
+      );
+
+      print("api call res is first time $res");
+      print(res.statusCode);
+      var result = res.data;
+      print('from api res is $result');
+      final Map<String, dynamic> allData = result;
+      print('from api, final res is $allData');
+      return allData;
+
+
+
+    }on DioException catch (e) {
+      if (e.response != null) {
+        // Server error
+        debugPrint('from dio exception ${e.response}');
+        var err = e.response;
+        print('from api the error is $err');
+        return err;
+      } else {
+        // Network error
+        print('error from catch block $e');
+        return 'Error: $e';
+      }
+    }
+
+
+
+  }
 
 }

@@ -51,17 +51,18 @@ class _SettleupPageState extends State<SettleupPage> {
                   SnackBar(
                     content: Text('Transaction Settled Successfully'),
                     backgroundColor: Colors.green,
-                    duration: Duration(seconds: 2),
+                    duration: Duration(seconds: 1),
                   ),
                 );
-                await Future.delayed(Duration(seconds: 2));
+                await Future.delayed(Duration(seconds: 1));
                 await AutoRouter.of(context).push(
-                  AddExpensePageRoute(
-                    groupId: widget.groupId,
-                    groupName: widget.groupName,
-                    groupAdminId: widget.groupAdminId,
-                    groupAdminName: widget.groupAdminName,
-                  ),
+                  // AddExpensePageRoute(
+                  //   groupId: widget.groupId,
+                  //   groupName: widget.groupName,
+                  //   groupAdminId: widget.groupAdminId,
+                  //   groupAdminName: widget.groupAdminName,
+                  // ),
+                    ViewSettlementPageRoute(),
                 );
               } else if (state is MakeSettlementFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -73,53 +74,86 @@ class _SettleupPageState extends State<SettleupPage> {
                 );
               }
 
-              // else {
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(
-              //       content: Text('Some error occurred'),
-              //       backgroundColor: Colors.red,
-              //       duration: Duration(seconds: 2),
-              //     ),
-              //   );
-              // }
             },
             child: Column(children: [
               BlocBuilder<SettleupBloc, SettleupState>(
                 builder: (context, state) {
                   if (state is GetUserDetailsSuccess) {
-                    return CustomHeader(
-                      userName: state.userDetails["user_name"],
-                      userEmail: state.userDetails["user_email"],
+
+                    final transactions = state.unsettledTransactions["transactions"];
+
+                    // return CustomHeader(
+                    //   userName: state.userDetails["user_name"],
+                    //   userEmail: state.userDetails["user_email"],
+                    // );
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children : [
+                        CustomHeader(
+                          userName: state.userDetails["user_name"],
+                          userEmail: state.userDetails["user_email"],
+                        ),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Settle Your Balances",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              // Text(
+                              //   'Admin : ${widget.groupAdminName}',
+                              //   style: TextStyle(color: Colors.cyan, fontSize: 18),
+                              // ),
+                            ],
+                          ),
+                        ),
+
+
+                      ]
                     );
                   }
-                  return CustomHeader(
-                    userName: "--",
-                    userEmail: "--",
-                  );
+                  // return CustomHeader(
+                  //   userName: "--",
+                  //   userEmail: "--",
+                  // );
+
+                  return Text("");
                 },
+
+              //   extending builder
+              // ),
+              // SizedBox(height: 10),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         "Settle Your Balances",
+              //         style: TextStyle(fontSize: 20),
+              //       ),
+              //       // Text(
+              //       //   'Admin : ${widget.groupAdminName}',
+              //       //   style: TextStyle(color: Colors.cyan, fontSize: 18),
+              //       // ),
+              //     ],
+              //   ),
+              // ),
+
+
               ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Settle Your Balances",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    // Text(
-                    //   'Admin : ${widget.groupAdminName}',
-                    //   style: TextStyle(color: Colors.cyan, fontSize: 18),
-                    // ),
-                  ],
-                ),
-              ),
+
+
+
+
+
               Expanded(child: BlocBuilder<SettleupBloc, SettleupState>(
                   builder: (context, state) {
                 if (state is GetUserDetailsSuccess) {
-                  final transactions =
-                      state.unsettledTransactions["transactions"];
+                  final transactions = state.unsettledTransactions["transactions"];
                   print("the value here is $transactions");
 
                   if (state.unsettledTransactions["transactions"] == null) {
@@ -211,8 +245,9 @@ class _SettleupPageState extends State<SettleupPage> {
                           ),
                         );
                       });
-                } else {
-                  return Text("in else block");
+                }
+                else {
+                  return Center(child: CircularProgressIndicator());
                 }
               }))
             ])),

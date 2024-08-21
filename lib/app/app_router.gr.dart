@@ -397,3 +397,22 @@ class ViewAllRouteArgs {
     return 'ViewAllRouteArgs{groupId: $groupId, groupName: $groupName, groupAdminId: $groupAdminId, groupAdminName: $groupAdminName, key: $key}';
   }
 }
+
+/// generated route for
+/// [ViewSettlementPage]
+class ViewSettlementPageRoute extends PageRouteInfo<void> {
+  const ViewSettlementPageRoute({List<PageRouteInfo>? children})
+      : super(
+          ViewSettlementPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ViewSettlementPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ViewSettlementPage();
+    },
+  );
+}

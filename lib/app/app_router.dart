@@ -8,6 +8,7 @@ import 'package:frontend/features/groupMembers/add_member_page.dart';
 import 'package:frontend/features/viewAllMembers/view_all.dart';
 import 'package:frontend/features/addExpense/add_expense_page.dart';
 import 'package:frontend/features/settleup/settleup_page.dart';
+import 'package:frontend/features/viewSettlements/view_settlement_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -31,10 +32,11 @@ class AppRouter extends RootStackRouter {
         // Dynamic route for GroupDetailPage
         AutoRoute(
             page: AddMemberPageRoute.page, path: '/group/add_member/:groupId'),
-        AutoRoute(
-            page: AddMemberPageRoute.page, path: '/group/add_member/:groupId'),
+        // AutoRoute(
+        //     page: AddMemberPageRoute.page, path: '/group/add_member/:groupId'),
         AutoRoute(page: ViewAllRoute.page, path: '/group/viewall/:groupId'),
         AutoRoute(page: AddExpensePageRoute.page, path: '/addexpense/'),
         AutoRoute(page: SettleupPageRoute.page, path: '/settleup'),
+        AutoRoute(page: ViewSettlementPageRoute.page),
       ];
 }

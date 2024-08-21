@@ -158,7 +158,7 @@ class _GroupDetailState extends State<GroupDetailPage> {
                       ElevatedButton(
                         onPressed: () async {
                           await AutoRouter.of(context).push(
-                            ProfilePageRoute(),
+                            ViewSettlementPageRoute(),
                             //
                             // AddExpensePageRoute(
                             //   groupId: widget.groupId,
