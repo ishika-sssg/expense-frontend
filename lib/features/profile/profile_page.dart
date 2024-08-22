@@ -60,7 +60,6 @@ class _ProfilePageState extends State<ProfilePage> {
             appBar: CommonNavbar(),
             body:
 
-            //     adding scroll here :
             Column(
                 children: [
                   BlocBuilder<ProfileBloc, ProfileState>(
