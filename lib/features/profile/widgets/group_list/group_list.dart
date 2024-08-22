@@ -46,31 +46,53 @@ class _GroupListState extends State<GroupList> {
                 builder: (context, state) {
                   if (state is GroupListLoaded) {
                     return Center(child: CircularProgressIndicator());
-                  } else if (state is GroupListData) {
+                  }
+                  else if (state is GroupListData) {
                     final groupData = state.groupsData;
-                    var dataContent = groupData['data'];
-                    var res = dataContent['alldata'];
+                    // var dataContent = groupData['data'];
+                    var dataContent = groupData.data;
+
+                    // var res = dataContent['alldata'];
+
 
 
                     return
+
                       Expanded(
                         child : ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: groupData['data']['total'],
+                          // itemCount: groupData['data']['total'],
+                          // itemBuilder: (context, index) {
+                          //   final group = groupData['data']['alldata'][index];
+
+                          itemCount: groupData.data!.total,
                           itemBuilder: (context, index) {
-                            final group = groupData['data']['alldata'][index];
+                            final group = groupData.data!.alldata![index];
                             return GroupCard(group: group);
                           },
-                        )
+                        ),
+
+
+
+
+
 
                       );
+
                   }
                   else{
                     return Center(
-                        child : Text("from else")
-                    );                  }
-                })
+                        child : Text("from else blockk here")
+                    );
+                  }
+
+                }
+                ),
+
+
+
+
         );
 
 

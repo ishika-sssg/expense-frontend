@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:frontend/app/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
 import 'package:frontend/features/addExpense/core/add_expense_bloc.dart';
@@ -356,6 +357,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       ));
                     }
                   })
-            ]))));
+            ])
+            ),
+
+          bottomNavigationBar: BottomNavbar(),
+
+        )
+    );
   }
 }

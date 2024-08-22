@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
 import 'package:frontend/features/profile/core/profile_bloc.dart';
 import 'package:frontend/features/profile/core/profile_event.dart';
+import 'package:frontend/features/profile/widgets/group_list/core/group_list_bloc.dart';
+import 'package:frontend/features/profile/widgets/group_list/core/group_list_state.dart';
 import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'package:frontend/repository/services/group_service/group_details.dart';
 import 'package:frontend/repository/services/user_service/loggedin_user.dart';
@@ -21,6 +24,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  String? groupId;
+  String? groupName;
+  String? groupDescription;
+  String? groupAdminId;
+  String? groupAdminName;
+
 
   final _formKey = GlobalKey<FormState>();
   final LoggedinUser loggedinUser = LoggedinUser();
@@ -77,6 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       builder: (context, state) {
                         if (state is ProfileLoaded) {
                           return
+
                             Expanded(
                               child :
                               Column(
@@ -107,14 +118,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ],
                                           ),
 
+
+                                          // lifting up state to get details  :
+
                                           GroupList(userName: 'abc', userEmail: 'abc')
+
 
                                         ],
                                       ),
                                     ),
                                   ),
+
+
+
                                 ],
-                              )
+                              ),
 
                             );
 
@@ -163,23 +181,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
 
                       // },
-                      listener: (context, state) {}
+                      // listener: (context, state) {},
+                    listener : (context, state){},
+
+
                   ),
 
-                  // Add GroupList widget here
-                  // Expanded(child: GroupList(userName: 'abc', userEmail: 'abc')),
-                  // GroupList(userName: 'abc', userEmail: 'abc'),
 
-                  // Wrapping GroupList in a Container with a specific height might also help.
-                  // Container(
-                  //   height: MediaQuery.of(context).size.height * 0.9, // Adjust height as needed
-                  //   child: GroupList(userName: 'abc', userEmail: 'abc'),
-                  // ),
-
-                ]
+                ],
 
 
-            )
+            ),
+
+    bottomNavigationBar: BottomNavbar(),
+
+
+
+
+
+
         )
 
 

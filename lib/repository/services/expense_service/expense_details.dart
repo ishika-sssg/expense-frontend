@@ -5,6 +5,15 @@ import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'dart:convert';
 import 'package:frontend/repository/models/expense.dart';
 
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:open_file/open_file.dart';
+
+
+
+
 
 class ExpenseDetails{
   final Api api = Api();
@@ -218,6 +227,85 @@ class ExpenseDetails{
 
 
 
+  }
+
+  Future <void> DownloadCsvFile(String user_id) async{
+
+    try{
+      var mytoken = await _authStorage.getToken('token');
+
+      Response res = await api.dio.get(
+        'http://localhost:8080/expense/csv/settlerecord/user_id/$user_id',
+        options: Options(
+          headers: {'Authorization': 'Bearer $mytoken',
+            // 'Content-Type': 'application/json',
+             'responseType': ResponseType.bytes,
+
+          },
+          validateStatus: (status) {
+            // Accept all status codes to handle them manually
+            return status != null && status < 500;
+          },
+        ),
+
+      );
+
+      if (res.statusCode == 200) {
+        // Get the directory to store the file
+        Directory? directory;
+        if (Platform.isAndroid) {
+          // Use getExternalStorageDirectory() for Android
+          directory = await getExternalStorageDirectory();
+        } else if (Platform.isIOS || Platform.isMacOS) {
+          // Use getApplicationDocumentsDirectory() for iOS/macOS
+          directory = await getApplicationDocumentsDirectory();
+        } else if (Platform.isWindows || Platform.isLinux) {
+          // Use getApplicationDocumentsDirectory() for Windows/Linux
+          directory = await getApplicationDocumentsDirectory();
+        } else if (Platform.isFuchsia) {
+          // Fuchsia may also use the application documents directory
+          directory = await getApplicationDocumentsDirectory();
+        } else {
+          // Handle web or other platforms, or throw an error
+          throw UnsupportedError("This platform is not supported.");
+        }
+
+
+        // final directory = await getExternalStorageDirectory();
+        // String filePath = '${directory.path}/$fileName';
+
+        final filePath = '${directory!.path}/report.csv';
+
+        // Write the file to the device's storage
+        final file = File(filePath);
+        await file.writeAsString(res.data);
+
+        print('File saved at $filePath');
+
+        // Optionally open the file
+        // openFile(filePath);
+        // Open the file
+        final result = await OpenFile.open(filePath);
+        print('File opened: ${result.message}');
+
+      } else {
+        print('Failed to download file. Status code: ${res.statusCode}, res is $res');
+      }
+    }catch (e) {
+      print('Error: $e');
+    }
+
+  }
+
+  Future <void> RequestPermission(String user_id) async{
+    final status = await Permission.storage.request();
+    if (status.isGranted) {
+      // Permission granted, proceed with download
+      DownloadCsvFile(user_id);
+    } else {
+      // Permission denied
+      print('Storage permission denied');
+    }
   }
 
 }

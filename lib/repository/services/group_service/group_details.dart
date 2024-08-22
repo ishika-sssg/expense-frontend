@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:frontend/repository/models/all_groups_data.dart';
 import '../dio.dart';
 import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'dart:convert';
@@ -7,7 +8,11 @@ class GroupDetails {
   final Api api = Api();
   final AuthStorage _authStorage = AuthStorage();
 
-  Future<dynamic> getGroupsByUserid() async {
+  // Future<dynamic> getGroupsByUserid() async {
+  Future<AllGroupsData> getGroupsByUserid() async {
+
+    print("first of all calling api here");
+
     try {
       // Response getUserInfo = await _authStorage.retrieveData();
       final userInfo = await _authStorage.retrieveData();
@@ -23,21 +28,32 @@ class GroupDetails {
               options: Options(
                 headers: {'Authorization': 'Bearer $mytoken'},
               ));
-      var result = res.data;
+      // var result = res.data;
+
+
+      // final result = json.decode(res.data);
+      final result = res.data as Map<String, dynamic>;
+
+
+      return AllGroupsData.fromJson(result);
+
+
+
 
       // Map<dynamic, dynamic> apiResponse = jsonDecode(result);
       // print("in map format $apiResponse");
 
       print("original format $result");
-      final Map<String, dynamic> allData = result;
-      print(allData);
-      var data = allData['data'];
-      var a = data['alldata'];
-      print('my array $a');
+      // final Map<String, dynamic> allData = result;
+      // print(allData);
+      // var data = allData['data'];
+      // var a = data['alldata'];
+      // print('my array $a');
       // final Map parsed = json.decode(result);
       // print('from map $parsed');
 
-      return allData;
+      // return allData;
+      // return result;
     } on DioException catch (e) {
       // return e.response!.data;
       if (e.response != null) {
@@ -49,8 +65,10 @@ class GroupDetails {
         return err;
       } else {
         // Network error
+        final error = e.response?.data;
         print('error from catch block $e');
-        return 'Error: $e';
+        // return 'Error: $e';
+        return error;
       }
     }
   }

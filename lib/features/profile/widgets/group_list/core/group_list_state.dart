@@ -1,5 +1,6 @@
 
 import 'package:equatable/equatable.dart';
+import 'package:frontend/repository/models/all_groups_data.dart';
 
 class GroupListState extends Equatable{
   @override
@@ -14,7 +15,8 @@ class GroupListLoaded extends GroupListState{}
 
 
 class GroupListData extends GroupListState{
-  final dynamic groupsData;
+  // final dynamic groupsData;
+  final AllGroupsData groupsData;
   GroupListData({required this.groupsData});
   @override
   List<Object> get props => [groupsData];

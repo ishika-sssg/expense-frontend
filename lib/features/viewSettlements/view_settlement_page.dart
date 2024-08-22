@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/features/viewSettlements/core/view_settlement_bloc.dart';
 import 'package:frontend/features/viewSettlements/core/view_settlement_event.dart';
 import 'package:frontend/features/viewSettlements/core/view_settlement_state.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
@@ -20,8 +22,11 @@ class ViewSettlementPage extends StatefulWidget {
 }
 
 class _ViewSettlementPageState extends State<ViewSettlementPage> {
+  final ExpenseDetails expenseDetails = ExpenseDetails();
+
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
         create: (context) => ViewSettlementBloc(
             authStorage: AuthStorage(), expenseDetails: ExpenseDetails())
@@ -43,16 +48,43 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                               userEmail: state.userData["user_email"],
                             ),
                             SizedBox(height: 16.0),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Settlements History',
-                                style: TextStyle(
-                                  fontSize:
+                            Padding(padding: EdgeInsets.symmetric(horizontal: 15.0),
+                            child : Row(
+
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children : [
+                                  Text(
+                                    'Settlements History',
+                                    style: TextStyle(
+                                      fontSize:
                                       20.0, // Adjust the font size as needed
-                                ),
-                              ),
+                                    ),
+                                  ),
+                                  ElevatedButton.icon(
+                                      onPressed: ()async{
+                                        await expenseDetails.RequestPermission(state.userData["user_id"].toString());
+                                        print("download button");
+                                      },
+                                    icon: const Icon(Icons.download),
+                                    label: const Text('Report'),
+                                      iconAlignment : IconAlignment.end,
+                                  )
+
+                                ]
+
                             ),
+                            ),
+
+                            // Align(
+                            //   alignment: Alignment.center,
+                            //   child: Text(
+                            //     'Settlements History',
+                            //     style: TextStyle(
+                            //       fontSize:
+                            //           20.0, // Adjust the font size as needed
+                            //     ),
+                            //   ),
+                            // ),
                             SizedBox(height: 16.0),
                             if (state.allData["data"]["info"] == null)
                               Center(
@@ -167,9 +199,7 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
-                            // Make the text bold
-                            color:
-                                Colors.cyan, // Adjust the font size as needed
+                            color: Colors.cyan,
                           ),
                         ),
                       );
@@ -178,12 +208,17 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                         child: Text(
                           "No Settlements Found",
                           style: TextStyle(
-                            fontSize: 20.0, // Adjust the font size as needed
+                            fontSize: 20.0,
                           ),
                         ),
                       );
                     }
                   }),
-            )));
+
+            ),
+            bottomNavigationBar: BottomNavbar(),
+
+    )
+    );
   }
 }

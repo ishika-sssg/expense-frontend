@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/app/app_router.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
 
@@ -241,6 +242,8 @@ class _AddMemberPageState extends State<AddMemberPage> {
 
           // child: const Icon(Icons.remove_red_eye, color: Colors.white, size: 28),
         ),
+        bottomNavigationBar: BottomNavbar(),
+
       ),
     );
   }

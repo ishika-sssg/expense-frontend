@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:frontend/app/app_router.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
 
@@ -196,15 +197,10 @@ class _SettleupPageState extends State<SettleupPage> {
                                     ElevatedButton(
                                       onPressed: () async {
                                         print("settle button");
-                                        context
-                                            .read<SettleupBloc>()
-                                            .add(MakeSettlementEvent(
-                                              trans_id:
-                                                  transaction['ID'].toString(),
-                                              user_id: state
-                                                  .userDetails["user_id"]
-                                                  .toString(),
-                                            ));
+                                        // context.read<SettleupBloc>().add(MakeSettlementEvent(
+                                        //   trans_id: transaction['ID'].toString(),
+                                        //   user_id: state.userDetails["user_id"].toString(),
+                                        // ));
                                       },
                                       child: Text("Settle"),
                                     )
@@ -215,7 +211,7 @@ class _SettleupPageState extends State<SettleupPage> {
                                 if (state.userDetails["user_id"] ==
                                     transaction["debtor_id"])
                                   Text(
-                                    'you owes $creditorName \$${amount}',
+                                    'You owes $creditorName \$${amount}',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       color: Colors.red,
@@ -250,7 +246,11 @@ class _SettleupPageState extends State<SettleupPage> {
                   return Center(child: CircularProgressIndicator());
                 }
               }))
-            ])),
+            ]
+            )
+        ),
+        bottomNavigationBar: BottomNavbar(),
+
       ),
     );
   }

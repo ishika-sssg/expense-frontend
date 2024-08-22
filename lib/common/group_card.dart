@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/app/app_router.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:frontend/repository/models/all_groups_data.dart';
 
 
 
 class GroupCard extends StatefulWidget {
   // const GroupCard({super.key});
-  final Map<String, dynamic> group;
+  // final Map<String, dynamic> group;
+
+  final Alldata group;
 
   GroupCard({required this.group});
 
@@ -24,11 +27,18 @@ class _GroupCardState extends State<GroupCard> {
        GestureDetector(
     onTap : () async{
     await AutoRouter.of(context).push(GroupDetailPageRoute(
-    groupId: widget.group['ID'].toString(),
-      groupName: widget.group['group_name'],
-      groupDescription: widget.group['description'],
-      groupAdminId: widget.group['group_admin_id'].toString(),
-      groupAdminName: widget.group['admin']['user_name']
+    // groupId: widget.group['ID'].toString(),
+    //   groupName: widget.group['group_name'],
+    //   groupDescription: widget.group['description'],
+    //   groupAdminId: widget.group['group_admin_id'].toString(),
+    //   groupAdminName: widget.group['admin']['user_name']
+
+        groupId: widget.group.iD.toString(),
+        groupName: widget.group.groupName!,
+        groupDescription: widget.group.description!,
+        groupAdminId: widget.group.groupAdminId.toString(),
+        groupAdminName: widget.group.admin?.userName ?? "not mentioned"
+
 
 
     ));
@@ -59,11 +69,13 @@ class _GroupCardState extends State<GroupCard> {
 
                   children: [
                   Text(
-                    widget.group['group_name'],
+                    // widget.group['group_name'],
+                    widget.group.groupName!,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    widget.group['category'],
+                    // widget.group['category'],
+                    widget.group.category!,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
 
@@ -73,8 +85,10 @@ class _GroupCardState extends State<GroupCard> {
 
               SizedBox(height: 8),
               Text(
-                widget.group['description'],
-                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                // widget.group['description'],
+                 widget.group.description!,
+
+              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
               SizedBox(height: 8),
               Row(
@@ -86,7 +100,8 @@ class _GroupCardState extends State<GroupCard> {
                   ),
 
                     Text(
-                    widget.group["admin"]["user_name"],
+                    // widget.group["admin"]["user_name"],
+                        widget.group.admin?.userName ?? "not mentioned",
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ]

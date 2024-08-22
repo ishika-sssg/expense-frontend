@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 
 import 'package:frontend/features/viewAllMembers/core/view_all_bloc.dart';
 import 'package:frontend/features/viewAllMembers/core/view_all_event.dart';
@@ -264,6 +265,12 @@ class _ViewAllState extends State<ViewAll> {
                               }
                             }),
                       )
-                    ]))));
+                    ])
+            ),
+
+          bottomNavigationBar: BottomNavbar(),
+
+        )
+    );
   }
 }

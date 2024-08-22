@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:frontend/app/app_router.dart';
+import 'package:frontend/common/bottom_navbar.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/common/header.dart';
 import 'package:frontend/features/group/core/group_detail_bloc.dart';
@@ -126,20 +127,20 @@ class _GroupDetailState extends State<GroupDetailPage> {
                         },
                         child: Text("Add Members"),
                       ),
-                      SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await AutoRouter.of(context).push(
-                            AddExpensePageRoute(
-                              groupId: widget.groupId,
-                              groupName: widget.groupName,
-                              groupAdminId: widget.groupAdminId,
-                              groupAdminName: widget.groupAdminName,
-                            ),
-                          );
-                        },
-                        child: Text("Add Expense"),
-                      ),
+                      // SizedBox(width: 10),
+                      // ElevatedButton(
+                      //   onPressed: () async {
+                      //     await AutoRouter.of(context).push(
+                      //       AddExpensePageRoute(
+                      //         groupId: widget.groupId,
+                      //         groupName: widget.groupName,
+                      //         groupAdminId: widget.groupAdminId,
+                      //         groupAdminName: widget.groupAdminName,
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: Text("Add Expense"),
+                      // ),
                       SizedBox(width: 10),
                       ElevatedButton(
                         child: Text("View Members"),
@@ -217,7 +218,7 @@ class _GroupDetailState extends State<GroupDetailPage> {
                                       state.expenseSummary["summary"]
                                           ["total_borrowed"])
                                     Text(
-                                      'You owe \$${state.expenseSummary["summary"]["net_balance"].toStringAsFixed(2)} overall',
+                                      'You owe \$${state.expenseSummary["summary"]["net_balance"].abs().toStringAsFixed(2)} overall',
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,
@@ -431,6 +432,37 @@ class _GroupDetailState extends State<GroupDetailPage> {
             ],
           ),
         ),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: Colors.cyan,
+          tooltip: 'Add Expense',
+          onPressed: () async {
+            await AutoRouter.of(context).push(
+              AddExpensePageRoute(
+                  groupId: widget.groupId,
+                  groupName: widget.groupName,
+                  groupAdminId: widget.groupAdminId,
+                  groupAdminName: widget.groupAdminName),
+            );
+          },
+          label: Text(
+            'Add Expense',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+            ),
+          ),
+          elevation: 6,
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+
+          // child: const Icon(Icons.remove_red_eye, color: Colors.white, size: 28),
+        ),
+        bottomNavigationBar: BottomNavbar(),
+
       ),
     );
   }

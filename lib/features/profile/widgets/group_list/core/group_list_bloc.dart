@@ -28,7 +28,8 @@ class GroupListBloc extends Bloc<GroupListEvent, GroupListState> {
             // final loggedUserDetails = await authStorage.retrieveData();
 
             print("from group list bloc $res");
-            if(res['status'] == 200){
+            // if(res['status'] == 200){
+            if(res.status == 200){
               emit(GroupListData(
                   groupsData: res,
               ));
@@ -36,9 +37,11 @@ class GroupListBloc extends Bloc<GroupListEvent, GroupListState> {
               // emit(ProfileUserData(profileUser : loggedUserDetails));
 
             }else{
-              emit(GroupListError(message: res['message']));
+              // emit(GroupListError(message: res['message']));
+              emit(GroupListError(message: res.message!));
 
-            }
+
+      }
 
           } catch (e) {
             emit(GroupListError(message: '$e'));
