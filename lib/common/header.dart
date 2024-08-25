@@ -24,7 +24,7 @@ class CustomHeader extends StatelessWidget {
         duration: Duration(seconds: 2),
       ),
     );
-    await AutoRouter.of(context).push(LoginPageRoute());
+    await AutoRouter.of(context).replace(LoginPageRoute());
   }
 
   //for profile dialog:

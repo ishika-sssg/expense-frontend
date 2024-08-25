@@ -183,16 +183,22 @@ class _SettleupPageState extends State<SettleupPage> {
           listener: (context, state) async {
             if (state is MakeSettlementSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text('Transaction Settled Successfully'),
                   backgroundColor: Colors.green,
                   duration: Duration(seconds: 1),
                 ),
               );
-              await Future.delayed(Duration(seconds: 1));
-              await AutoRouter.of(context).push(
-                ViewSettlementPageRoute(),
-              );
+
+              // to load the page when settlement is being confirmed.
+              context.read<SettleupBloc>().add(GetAllSettlementDetailsEvent(group_id: widget.groupId));
+              await Future.delayed(const Duration(seconds: 1));
+              if (context.mounted){
+                await AutoRouter.of(context).push(
+                  const ViewSettlementPageRoute(),
+                );
+              }
+
             } else if (state is MakeSettlementFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

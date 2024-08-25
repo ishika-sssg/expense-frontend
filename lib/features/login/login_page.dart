@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                             try {
                               // print('############## navigation route');
                               await AutoRouter.of(context)
-                                  .push(const ProfilePageRoute());
+                                  .replaceAll([const ProfilePageRoute()]);
                             } catch (err) {
                               // print("************************Error navigating to ProfilePageRoute: $err");
                               print(err);

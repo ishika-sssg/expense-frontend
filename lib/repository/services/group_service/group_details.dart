@@ -16,22 +16,16 @@ class GroupDetails {
     try {
       // Response getUserInfo = await _authStorage.retrieveData();
       final userInfo = await _authStorage.retrieveData();
-
       var mytoken = await _authStorage.getToken('token');
-      // print("this is my token $mytoken");
-
       var user_id = userInfo['user_id'];
-      // print("my user id $user_id");
-
       Response res =
           await api.dio.get('http://localhost:8080/group/all/$user_id',
               options: Options(
                 headers: {'Authorization': 'Bearer $mytoken'},
               ));
-      // var result = res.data;
 
 
-      // final result = json.decode(res.data);
+
       final result = res.data as Map<String, dynamic>;
 
 
@@ -43,17 +37,7 @@ class GroupDetails {
       // Map<dynamic, dynamic> apiResponse = jsonDecode(result);
       // print("in map format $apiResponse");
 
-      print("original format $result");
-      // final Map<String, dynamic> allData = result;
-      // print(allData);
-      // var data = allData['data'];
-      // var a = data['alldata'];
-      // print('my array $a');
-      // final Map parsed = json.decode(result);
-      // print('from map $parsed');
 
-      // return allData;
-      // return result;
     } on DioException catch (e) {
       // return e.response!.data;
       if (e.response != null) {

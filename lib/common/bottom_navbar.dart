@@ -27,16 +27,20 @@ class _BottomNavbarState extends State<BottomNavbar> {
       AutoRouter.of(context).replace(ProfilePageRoute()); // Navigate using AutoRoute
       //   tabsRouter.navigate(ProfilePageRoute());
       break;
-      // case 1:
-      // AutoRouter.of(context).push(GroupDetailPageRoute()); // Example with a groupId
-      // break;
+      case 1:
+      AutoRouter.of(context).replace(MemberExpensePageRoute()); // Example with a groupId
+      break;
       // case 2:
       // AutoRouter.of(context).push(ViewAllRoute(groupId: '1')); // Another example
       // break;
-      case 1:
+      case 2:
       AutoRouter.of(context).replace(ViewSettlementPageRoute()); // Navigate to
       //   tabsRouter.navigate(ViewSettlementPageRoute());
       break;
+      case 3:
+        AutoRouter.of(context).replace(AccountPageRoute()); // Navigate to
+        //   tabsRouter.navigate(ViewSettlementPageRoute());
+        break;
     }
   }
 
@@ -46,6 +50,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
       // final tabsRouter = AutoTabsRouter.of(context);
 
       return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
         // currentIndex: tabsRouter.activeIndex, // Set the current index
 
@@ -54,8 +59,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.group),
+          icon: Icon(Icons.groups_rounded),
           label: 'Groups',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Friends',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.local_activity),

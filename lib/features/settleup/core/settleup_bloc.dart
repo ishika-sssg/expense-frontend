@@ -56,7 +56,9 @@ class SettleupBloc extends Bloc<SettleupEvent, SettleupState> {
           final settleTrans = await expenseDetails.SettleLoggedinUserTransactions(event.trans_id, event.user_id );
           print("from settlement transaction $settleTrans");
           if(settleTrans["status"] == 200){
+            final st = state;
             emit(MakeSettlementSuccess(response: res));
+            emit(st);
           }
 
         }

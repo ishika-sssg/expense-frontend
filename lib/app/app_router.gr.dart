@@ -10,6 +10,25 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AccountPage]
+class AccountPageRoute extends PageRouteInfo<void> {
+  const AccountPageRoute({List<PageRouteInfo>? children})
+      : super(
+          AccountPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AccountPage();
+    },
+  );
+}
+
+/// generated route for
 /// [AddExpensePage]
 class AddExpensePageRoute extends PageRouteInfo<AddExpensePageRouteArgs> {
   AddExpensePageRoute({
@@ -222,6 +241,25 @@ class LoginPageRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const LoginPage();
+    },
+  );
+}
+
+/// generated route for
+/// [MemberExpensePage]
+class MemberExpensePageRoute extends PageRouteInfo<void> {
+  const MemberExpensePageRoute({List<PageRouteInfo>? children})
+      : super(
+          MemberExpensePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MemberExpensePageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MemberExpensePage();
     },
   );
 }

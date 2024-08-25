@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:frontend/repository/models/member_expense.dart';
 import '../dio.dart';
 import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'dart:convert';
@@ -228,6 +229,67 @@ class ExpenseDetails{
 
 
   }
+
+
+Future <MemberExpenseModal> GetExpensesMemberWise() async{
+  try {
+    // Response getUserInfo = await _authStorage.retrieveData();
+
+    print("here in my api function to call api");
+    print("calling api");
+    final userInfo = await _authStorage.retrieveData();
+
+    var mytoken = await _authStorage.getToken('token');
+    var user_id = userInfo['user_id'].toString();
+    Response res = await api.dio.get('http://localhost:8080/expense/members_expense/user_id/$user_id',
+        options: Options(
+          headers: {'Authorization': 'Bearer $mytoken'},
+        ));
+    // var result = res.data;
+
+
+    // final result = res.data;
+    final result = res.data as Map<String, dynamic>;
+
+
+    print("from api the result is ${res.data}");
+
+    // print(MemberExpense.fromJson(result));
+    try {
+      MemberExpenseModal myResponse = MemberExpenseModal.fromJson(res.data);
+      return myResponse;
+
+    }catch(err){
+      print(err);
+
+      throw err;
+    }
+
+
+
+
+
+
+
+  } on DioException catch (e) {
+    // return e.response!.data;
+    if (e.response != null) {
+      // Server error
+      print('from dio exception $e');
+      var err = e.response?.data;
+      print('from api $err');
+      // return 'Error: ${e.response?.data['error'] ?? 'Unknown error'}';
+      return err;
+    } else {
+      // Network error
+      final error = e.response?.data;
+      print('error from catch block $e');
+      // return 'Error: $e';
+      return error;
+    }
+  }
+
+}
 
   Future <void> DownloadCsvFile(String user_id) async{
 

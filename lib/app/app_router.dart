@@ -9,7 +9,8 @@ import 'package:frontend/features/viewAllMembers/view_all.dart';
 import 'package:frontend/features/addExpense/add_expense_page.dart';
 import 'package:frontend/features/settleup/settleup_page.dart';
 import 'package:frontend/features/viewSettlements/view_settlement_page.dart';
-
+import 'package:frontend/features/membersExpense/member_expense_page.dart';
+import 'package:frontend/features/account/account_page.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Route")
@@ -38,5 +39,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: AddExpensePageRoute.page, path: '/addexpense/'),
         AutoRoute(page: SettleupPageRoute.page, path: '/settleup'),
         AutoRoute(page: ViewSettlementPageRoute.page),
-      ];
+        AutoRoute(page: MemberExpensePageRoute.page),
+          AutoRoute(page: AccountPageRoute.page),
+
+  ];
 }
