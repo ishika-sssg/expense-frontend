@@ -43,6 +43,22 @@ class _MemberExpensePageState extends State<MemberExpensePage> {
                 // print("from friends page herer");
                 // print(state.memberDetails);
 
+                if(state.memberDetails.data == null){
+                  return
+                    Column(mainAxisSize: MainAxisSize.min, children: [
+                    CustomHeader(
+                    userName: state.userDetails["user_name"],
+                      userEmail: state.userDetails["user_email"],
+                    ),
+              SizedBox(height: 10),
+              Text("No members found",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )
+
+              ]
+              );
+                }
+
                 return Column(mainAxisSize: MainAxisSize.min, children: [
                   CustomHeader(
                     userName: state.userDetails["user_name"],
@@ -178,7 +194,7 @@ class _MemberExpensePageState extends State<MemberExpensePage> {
                                     ConstrainedBox(
                                         constraints: BoxConstraints(
                                           minHeight: 100.0,
-                                          maxHeight: 200.0,
+                                          maxHeight: 150.0,
                                         ),
                                         // SizedBox(
 
@@ -237,7 +253,7 @@ class _MemberExpensePageState extends State<MemberExpensePage> {
                   ),
                 ]);
               } else {
-                return Text("in else blockhere ");
+                return Text("No expenses yet  ");
               }
             },
           ),

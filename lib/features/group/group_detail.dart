@@ -179,6 +179,11 @@ class _GroupDetailState extends State<GroupDetailPage> {
               Expanded(
                 child: BlocBuilder<GroupDetailBloc, GroupDetailState>(
                   builder: (context, state) {
+                    if(state is GetAllExpensesLoading){
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
                     if (state is GetUserDetailsSuccess) {
                       if (state.expenseDetails["total"] == 0)
                         return Text("No expense yet",

@@ -51,6 +51,7 @@ try{
 
   //   for creating expense:
     on<AddExpenseOnClick>((AddExpenseOnClick event, Emitter<AddExpenseState> emit) async{
+      emit(AddExpenseLoadingState());
         try{
           var res= await expenseDetails.createExpenseApi(event.new_expense);
           print('res from add expense bloc $res');

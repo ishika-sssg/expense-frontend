@@ -6,7 +6,6 @@ import 'core/login_bloc.dart';
 import 'core/login_event.dart';
 import 'core/login_state.dart';
 import 'package:frontend/repository/services/auth_service/auth_api.dart';
-import 'package:frontend/features/profile/profile_page.dart';
 import 'package:auto_route/auto_route.dart';
 
 @RoutePage()
@@ -24,10 +23,48 @@ class _LoginPageState extends State<LoginPage> {
   String? _emailError;
   String? _passwordError;
 
+
+
+  void _validateEmail(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _emailError = 'Email cannot be empty';
+      });
+    } else {
+      setState(() {
+        _emailError = null;
+      });
+    }
+  }
+
+  void _validatePassword(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _passwordError = 'Password cannot be empty';
+      });
+    } else {
+      setState(() {
+        _passwordError = null;
+      });
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // _emailFocusNode.dispose();
+    // _passwordFocusNode.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text('Login')),
       appBar: CommonNavbar(),
 
       body: BlocProvider(
@@ -55,6 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Email',
                         errorText: _emailError,
                       ),
+                      onChanged: _validateEmail,
+
                     ),
                     TextField(
                       controller: _passwordController,
@@ -62,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Password',
                         errorText: _passwordError,
                       ),
+                      onChanged: _validatePassword,
                       obscureText: true,
                     ),
                     SizedBox(height: 20),
@@ -73,7 +113,6 @@ class _LoginPageState extends State<LoginPage> {
                               content: Text("Logged in successfully"),
                               backgroundColor: Colors.green,
                               duration: Duration(seconds: 2),
-// Background color
                             ),
                           );
                           //   directing to profile screen
@@ -94,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Failed login: $msg"),
-                              backgroundColor: Colors.red, // Background color
+                              backgroundColor: Colors.red,
                             ),
                           );
                         }
@@ -116,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ? 'Password cannot be empty'
                                   : null;
                             });
-                            // print('email, password $email, $password');
+                            // print('email, password , $password');
 
                             //adding validation
                             if (email.isNotEmpty && password.isNotEmpty) {

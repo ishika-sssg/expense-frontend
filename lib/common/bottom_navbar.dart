@@ -71,7 +71,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
           label: 'Activity',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.account_circle_rounded),
           label: 'Account',
         ),
       ],

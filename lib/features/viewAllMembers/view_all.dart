@@ -177,9 +177,7 @@ class _ViewAllState extends State<ViewAll> {
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: [
-                                                        if (member[
-                                                                "is_admin"] ==
-                                                            true)
+                                                        if (member["is_admin"] == true)
                                                           Container(
                                                             padding: EdgeInsets
                                                                 .symmetric(
@@ -220,15 +218,10 @@ class _ViewAllState extends State<ViewAll> {
                                                             // print("button clicked");
                                                             context
                                                                 .read<
-                                                                    ViewAllBloc>()
-                                                                .add(DeleteMemberEvent(
-                                                                    group_id: widget
-                                                                        .groupId,
-                                                                    member_id:
-                                                                        member_id,
-                                                                    group_admin_id:
-                                                                        widget
-                                                                            .groupAdminId));
+                                                                    ViewAllBloc>().add(DeleteMemberEvent(
+                                                                    group_id: widget.groupId,
+                                                                    member_id: member_id,
+                                                                    group_admin_id: widget.groupAdminId));
                                                           },
                                                         ),
                                                       ])),
@@ -241,26 +234,43 @@ class _ViewAllState extends State<ViewAll> {
                               // return Text("in else");
                               else if (state is ViewAllMembersFailure) {
                                 return Center(
-                                  child: Text(
-                                    "No members found",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                      // Make the text bold
-                                      color: Colors
-                                          .cyan, // Adjust the font size as needed
-                                    ),
-                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "No members found",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          // Make the text bold
+                                          color: Colors
+                                              .cyan, // Adjust the font size as needed
+                                        ),
+                                      ),
+
+
+
+                                    ],
+                                  )
+
+
                                 );
                               } else {
                                 return Center(
-                                  child: Text(
-                                    "No members found",
-                                    style: TextStyle(
-                                      fontSize:
+
+                                  child : Column(
+                                    children : [
+                                      Text(
+                                        "No members found",
+                                        style: TextStyle(
+                                          fontSize:
                                           20.0, // Adjust the font size as needed
-                                    ),
-                                  ),
+                                        ),
+                                      ),
+                                      Text("Please add members in the group")
+
+                                    ]
+                                  )
+
                                 );
                               }
                             }),

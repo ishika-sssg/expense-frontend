@@ -15,6 +15,7 @@ class GroupDetailBloc extends Bloc<GroupDetailEvent, GroupDetailState> {
     on<GroupDetailEvent>((event, emit) {});
 
     on<GetUserDetails>((GetUserDetails event, Emitter <GroupDetailState> emit) async{
+      emit(GetAllExpensesLoading());
       try{
         final res = await authStorage.retrieveData();
         final userId = res["user_id"];

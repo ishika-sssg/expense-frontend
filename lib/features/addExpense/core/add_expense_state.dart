@@ -46,6 +46,7 @@ final class SelectedMembersListState extends AddExpenseState{
   List<Object> get props => [selectedMembersData];
 }
 
+final class AddExpenseLoadingState extends AddExpenseState{}
 final class AddExpenseSubmittedState extends AddExpenseState{
   final dynamic expense;
   AddExpenseSubmittedState({required this.expense});

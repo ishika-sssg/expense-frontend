@@ -62,12 +62,21 @@ class _AddExpensePageState extends State<AddExpensePage> {
         child: Scaffold(
             appBar: CommonNavbar(),
             body: Container(
+
+                // adding scrollbar :
+              child : SingleChildScrollView(
+
                 child: Column(children: [
               // CustomHeader always present at the top
               BlocBuilder<AddExpenseBloc, AddExpenseState>(
                 buildWhen: (previous, current) =>
                     current is GetProfileUserDetails,
                 builder: (context, state) {
+                  if(state is AddExpenseLoaded){
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                   if (state is GetProfileUserDetails) {
                     return Container(
                         child: Column(children: [
@@ -97,6 +106,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   buildWhen: (previous, current) =>
                       current is GetAllGroupMembersState,
                   builder: (context, state) {
+
                     if (state is GetAllGroupMembersState) {
                       List<MultiSelectItem<dynamic>> items = state
                           .allMembersData
@@ -165,16 +175,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
                                               setState(() {
                                                 _selectedMembers =
                                                     selectedMembers;
-                                                _paidByItems = selectedMembers
-                                                    .map<
-                                                            DropdownMenuItem<
-                                                                dynamic>>(
-                                                        (memberId) {
-                                                  final selectedMember = state
-                                                      .allMembersData
-                                                      .firstWhere((member) =>
-                                                          member['member_id'] ==
-                                                          memberId);
+                                                _paidByItems = selectedMembers.map<DropdownMenuItem<dynamic>>((memberId) {
+                                                  final selectedMember = state.allMembersData.firstWhere((member) => member['member_id'] == memberId);
                                                   return DropdownMenuItem<
                                                       dynamic>(
                                                     value: selectedMember[
@@ -317,22 +319,47 @@ class _AddExpensePageState extends State<AddExpensePage> {
                                                   members: membersList,
                                                   group_id: widget.groupId,
                                                 );
-                                                context
-                                                    .read<AddExpenseBloc>()
-                                                    .add(AddExpenseOnClick(
-                                                        expenseResponse));
+                                                context.read<AddExpenseBloc>().add(AddExpenseOnClick(expenseResponse));
                                               }
                                             },
                                             child: Text('Create Expense'),
+                                            // child : isLoading ? CircularProgressIndicator() : Text("Create Expense")
                                           ),
                                         ]))
                                   ]));
                       // );
                     }
-                    return (Text(
-                        "No Group Members Added. Please add members in group before creating expense."));
+                    return Center(
+                      child : Column(
+
+                        children : [
+                      Padding(
+                      padding: const EdgeInsets.all(16.0),
+
+                        child : Text(
+                              "No Group Members Added. \nPlease add members in group before creating expense.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16),
+                        )
+                      ),
+                          // ElevatedButton(
+                          //     onPressed: (){},
+                          //     child: Text("Add Members"))
+                        ]
+                      )
+
+
+
+
+
+                    );
                   },
                   listener: (context, state) {
+                    if(state is AddExpenseLoadingState){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Adding expense')),
+                      );
+                    }
                     if (state is AddExpenseSubmittedState) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -357,7 +384,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       ));
                     }
                   })
-            ])
+            ]
+                )
+
+    )
             ),
 
           bottomNavigationBar: BottomNavbar(),

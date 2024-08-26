@@ -99,6 +99,40 @@ class _SignupPageState extends State<SignupPage> {
         RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     return emailRegex.hasMatch(email);
   }
+  void _validateUserName(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _usernameError = 'User name cannot be empty';
+      });
+    } else {
+      setState(() {
+        _usernameError = null;
+      });
+    }
+  }
+  void _validateEmail(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _emailError = 'Email cannot be empty';
+      });
+    } else {
+      setState(() {
+        _emailError = null;
+      });
+    }
+  }
+
+  void _validatePassword(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _passwordError = 'Password cannot be empty';
+      });
+    } else {
+      setState(() {
+        _passwordError = null;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +160,7 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: 'Username',
                       errorText: _usernameError,
                     ),
+                    onChanged: _validateUserName,
                   ),
                   TextFormField(
                     controller: _emailController,
@@ -135,6 +170,8 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: 'Email',
                       errorText: _emailError,
                     ),
+                    onChanged: _validateEmail,
+
                     keyboardType: TextInputType.emailAddress,
                   ),
                   TextFormField(
@@ -143,6 +180,7 @@ class _SignupPageState extends State<SignupPage> {
                       labelText: 'Password',
                       errorText: _passwordError,
                     ),
+                    onChanged: _validatePassword,
                     obscureText: true,
                   ),
                   SizedBox(height: 20),

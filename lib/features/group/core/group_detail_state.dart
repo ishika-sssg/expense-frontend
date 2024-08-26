@@ -22,6 +22,7 @@ final class GetUserDetailsFailure extends GroupDetailState{
   List<Object> get props => [message];
 }
 
+final class GetAllExpensesLoading extends GroupDetailState{}
 final class GetAllExpensesSuccess extends GroupDetailState{
   final dynamic allExpenseData;
   GetAllExpensesSuccess({required this.allExpenseData});

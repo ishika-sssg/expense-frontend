@@ -24,6 +24,30 @@ class _AddModalState extends State<AddModal> {
   String? _nameError;
   String? _descError;
 
+  void _validateName(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _nameError = 'Please input group name';
+      });
+    } else {
+      setState(() {
+        _nameError = null;
+      });
+    }
+  }
+
+  void _validateDesc(String value) {
+    if (value.isEmpty) {
+      setState(() {
+        _descError = 'Please input description';
+      });
+    } else {
+      setState(() {
+        _descError = null;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -56,6 +80,7 @@ class _AddModalState extends State<AddModal> {
                       labelText: 'Group Name',
                       errorText: _nameError,
                     ),
+                    onChanged: _validateName,
                   ),
                   SizedBox(height: 16.0), // Space below the AppBar
 
@@ -65,6 +90,7 @@ class _AddModalState extends State<AddModal> {
                       labelText: 'Group Description',
                       errorText: _descError,
                     ),
+                    onChanged: _validateDesc,
                   ),
                   SizedBox(height: 16.0),
 
@@ -95,7 +121,6 @@ class _AddModalState extends State<AddModal> {
                           _descError =
                               gdesc.isEmpty ? 'Please input description' : null;
                         });
-                        // print('email, password $email, $password');
 
                         //adding validation
                         if (gname.isNotEmpty && gdesc.isNotEmpty) {
@@ -128,9 +153,8 @@ class _AddModalState extends State<AddModal> {
             //   directing to profile screen
             Future.delayed(Duration(seconds: 1), () async {
               final newval = state.newGroupData;
-              print("from craete group modal $newval");
+              // print("from craete group modal $newval");
               final groupId = newval['data']['group']['ID'].toString();
-              print('the id of group is $groupId');
 
               try {
                 await AutoRouter.of(context).push(GroupDetailPageRoute(
@@ -141,7 +165,6 @@ class _AddModalState extends State<AddModal> {
                       newval['data']['admin_details']['ID'].toString(),
                   groupAdminName: newval['data']['admin_details']['user_name'],
                 ));
-                // Navigator.of(context).pop(); // Close the dialog
               } catch (err) {
                 print(err);
                 return err;
