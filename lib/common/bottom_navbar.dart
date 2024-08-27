@@ -38,7 +38,9 @@ class _BottomNavbarState extends State<BottomNavbar> {
       //   tabsRouter.navigate(ViewSettlementPageRoute());
       break;
       case 3:
-        AutoRouter.of(context).replace(AccountPageRoute()); // Navigate to
+        AutoRouter.of(context).replace(AccountPageRoute());
+
+        // Navigate to
         //   tabsRouter.navigate(ViewSettlementPageRoute());
         break;
     }

@@ -129,7 +129,7 @@ class _AccountPageState extends State<AccountPage> {
                                     icon:
                                         Icon(Icons.logout, color: Colors.white),
                                     label: Text(
-                                      "SIGN OUT",
+                                      "LOG OUT",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     style: ElevatedButton.styleFrom(

@@ -57,14 +57,14 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                                     'Settlements History',
                                     style: TextStyle(
                                       fontSize:
-                                      20.0, // Adjust the font size as needed
+                                      20.0,
                                     ),
                                   ),
                                   ElevatedButton.icon(
                                       onPressed: ()async{
                                         // await expenseDetails.RequestPermission(state.userData["user_id"].toString());
                                         await expenseDetails.newDownload(state.userData["user_id"].toString());
-                                        print("download button");
+                                        // print("download button");
                                       },
                                     icon: const Icon(Icons.download),
                                     label: const Text('Report'),
@@ -76,16 +76,7 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                             ),
                             ),
 
-                            // Align(
-                            //   alignment: Alignment.center,
-                            //   child: Text(
-                            //     'Settlements History',
-                            //     style: TextStyle(
-                            //       fontSize:
-                            //           20.0, // Adjust the font size as needed
-                            //     ),
-                            //   ),
-                            // ),
+
                             SizedBox(height: 16.0),
                             if (state.allData["data"]["info"] == null)
                               Center(

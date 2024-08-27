@@ -17,7 +17,7 @@ class MemberExpenseBloc extends Bloc<MemberExpenseEvent, MemberExpenseState> {
 
     on<GetAllExpenseByMembersEvent>((GetAllExpenseByMembersEvent event,
         Emitter<MemberExpenseState> emit) async {
-      print("in original bloc");
+      // print("in original bloc");
       emit(GetMembersDetailsLoading());
 
       try {
@@ -27,9 +27,9 @@ class MemberExpenseBloc extends Bloc<MemberExpenseEvent, MemberExpenseState> {
         if (userId != null) {
           final myRes = await expenseDetails.GetExpensesMemberWise();
 
-          print("from bloc");
-          print(myRes.status);
-          print(myRes.message);
+          // print("from bloc");
+          // print(myRes.status);
+          // print(myRes.message);
 
 
 

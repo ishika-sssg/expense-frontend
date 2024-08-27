@@ -60,7 +60,7 @@ class AddMemberBloc extends Bloc<AddMemberEvent, AddMemberState> {
 
       try{
         final userDetails = await authStorage.retrieveData();
-        print("from get userdetails event $userDetails");
+        // print("from get userdetails event $userDetails");
         emit(GetUserDetailsSuccess(userDetails:userDetails ));
 
 

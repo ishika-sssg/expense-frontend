@@ -11,6 +11,8 @@ import 'package:frontend/features/settleup/settleup_page.dart';
 import 'package:frontend/features/viewSettlements/view_settlement_page.dart';
 import 'package:frontend/features/membersExpense/member_expense_page.dart';
 import 'package:frontend/features/account/account_page.dart';
+import 'package:frontend/features/splashScreen/splash_screen_page.dart';
+
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Route")
@@ -22,10 +24,11 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         /// routes go here
         // AutoRoute(page: SignupPage, initial: true)
-        AutoRoute(
+    AutoRoute(page: SplashScreenPageRoute.page, initial: true),
+
+    AutoRoute(
           page: SignupPageRoute.page,
-          // path: '/',
-          initial: true,
+
         ),
         AutoRoute(page: ProfilePageRoute.page),
         AutoRoute(page: LoginPageRoute.page),

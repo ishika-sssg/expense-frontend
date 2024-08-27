@@ -39,9 +39,9 @@ class _SettleupPageState extends State<SettleupPage> {
 
 
   Future<void> _showConfirmDialogBox(BuildContext context, transaction, curr_user_id) async {
-    print("hii this is dialog function");
-
-    print("from transaction, values are : $transaction");
+    // print("hii this is dialog function");
+    //
+    // print("from transaction, values are : $transaction");
     final debtorId = transaction["debtor_id"];
     final creditorId = transaction["creditor_id"];
 

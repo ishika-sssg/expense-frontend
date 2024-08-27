@@ -93,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
     }
 
     //   adding validation and registration logic here:
-    print('Username : $username, email : $email, password : $password');
+    // print('Username : $username, email : $email, password : $password');
   }
 
   bool _isValidEmail(String email) {
@@ -143,11 +143,9 @@ class _SignupPageState extends State<SignupPage> {
   }
   void _checkIfLoggedIn() async {
     AuthStorage authStorage = AuthStorage();
-    // Call retrieveData from authstorage.dart to get the value
     var data = await authStorage.retrieveData() ;
-    print(data);
+    // print(data);
     if (data["user_email"] != null && data["user_name"] != null) {
-      // Navigator.pushReplacementNamed(context, '/profile');
       // print("user is already logged in ");
       await AutoRouter.of(context).replaceAll([const ProfilePageRoute()]);
     }

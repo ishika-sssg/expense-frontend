@@ -16,7 +16,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       try {
         final res = await authStorage.retrieveData();
         // var val = res.data;
-        print(res);
+        // print(res);
         emit(ProfileLoaded(
             email: res['user_email'], user_name: res['user_name']));
 

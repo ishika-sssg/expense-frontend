@@ -97,62 +97,6 @@ class _GroupListState extends State<GroupList> {
 
 
 
-    // body: Scrollbar(
-            //     thumbVisibility: true,
-            //     child: SingleChildScrollView(
-            //         child: Column(children: [
-            //           BlocBuilder<GroupListBloc, GroupListState>(
-            //               builder: (context, state) {
-            //                 if (state is GroupListLoaded) {
-            //                   return CircularProgressIndicator();
-            //                 } else if (state is GroupListData) {
-            //                   final groupData = state.groupsData;
-            //                   print("in widget file $groupData");
-            //
-            //                   var dataContent = groupData['data'];
-            //
-            //                   // var res = dataContent['alldata'];
-            //                   // print(res.runtimeType);
-            //                   // return Center(child: GroupCard());
-            //                   return Text("hii here");
-            //
-            //                   //   Expanded(
-            //                   //     child :
-            //                   //   ListView.builder(
-            //                   //
-            //                   //
-            //                   //
-            //                   //
-            //                   //       scrollDirection: Axis.vertical,
-            //                   //       shrinkWrap: true,
-            //                   //       itemCount: groupData['data']['total'],
-            //                   //       itemBuilder: (context, index) {
-            //                   //         final group = groupData['data']['alldata'][index];
-            //                   //
-            //                   //         // return Center(child: GroupCard());
-            //                   //         return GroupCard(group: group);
-            //                   //         // return Center(child : Text("group card"));
-            //                   //       }),
-            //                   //
-            //                   // );
-            //                 } else {
-            //                   // return Center(child: GroupCard());
-            //                   return Center(child: Text("showing data error"));
-            //                 }
-            //               })
-            //         ]
-            //
-            //
-            //
-            //         )
-            //
-            //
-            //
-            //
-            //     ))));
-
-
-
 
 
 

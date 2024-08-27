@@ -32,15 +32,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
 
-        // try {
           var res = await authApi.loginUser(event.email, event.password);
-        // }catch(err){
-        //   print(err);
-        // }
-        print("from login bloc");
 
-        print("res coming is $res");
-        print(res['success']);
+        // print("from login bloc");
+        //
+        // print("res coming is $res");
+        // print(res['success']);
         if (res is Map && res['status'] == 200) {
           emit(isSuccess(success: true));
 
@@ -50,7 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         }
       } catch (err) {
-        print("from login bloc file ");
+        // print("from login bloc file ");
         print("err in bloc file $err");
       }
 

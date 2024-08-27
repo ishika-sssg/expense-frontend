@@ -118,7 +118,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
 
 
-                                          // lifting up state to get details  :
 
                                           GroupList(userName: 'abc', userEmail: 'abc')
 

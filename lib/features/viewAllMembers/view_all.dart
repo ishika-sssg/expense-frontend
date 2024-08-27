@@ -37,7 +37,7 @@ class ViewAll extends StatefulWidget {
 class _ViewAllState extends State<ViewAll> {
   @override
   Widget build(BuildContext context) {
-    print(widget.groupId);
+    // print(widget.groupId);
     return BlocProvider(
         create: (context) => ViewAllBloc(
             authStorage: AuthStorage(), groupDetails: GroupDetails())
@@ -89,7 +89,7 @@ class _ViewAllState extends State<ViewAll> {
                               }
                               else if(state is ViewAllMembersNoData){
 
-                                print("here in main file to nodata state");
+                                // print("here in main file to nodata state");
 
                                 return Center(
                                 child: Column(children: [

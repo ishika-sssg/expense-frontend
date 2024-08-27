@@ -121,8 +121,8 @@ class _GroupDetailState extends State<GroupDetailPage> {
                             final data = await storage.retrieveData();
                     if (data["user_id"].toString() == widget.groupAdminId) {
 
-                      print(data["user_id"]);
-                      print(widget.groupAdminId);
+                      // print(data["user_id"]);
+                      // print(widget.groupAdminId);
 // Fetch the logged-in user's ID
 
                       await AutoRouter.of(context).push(
@@ -246,7 +246,7 @@ class _GroupDetailState extends State<GroupDetailPage> {
 
                                           return InkWell(
                                             onTap: () async{
-                                              print("block clicked");
+                                              // print("block clicked");
 
                                                 await AutoRouter.of(context).push(
                                                   SettleupPageRoute(

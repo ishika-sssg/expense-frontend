@@ -17,21 +17,21 @@ class ViewAllBloc extends Bloc<ViewAllEvent, ViewAllState> {
     on<ViewAllEvent>((event, emit) {});
 
     on<GetAllMembersEvent>((GetAllMembersEvent event, Emitter<ViewAllState> emit) async{
-      print("from getall member bloc file ${event.group_id}");
+      // print("from getall member bloc file ${event.group_id}");
       emit(ViewAllMembersLoading());
 
       try{
         final res = await groupDetails.getAllMembersOfGroupApi(event.group_id);
         final userDetail = await authStorage.retrieveData();
 
-        print(userDetail);
-        print("from bloc file $res");
-        print("the status is ${res['status']}");
+        // print(userDetail);
+        // print("from bloc file $res");
+        // print("the status is ${res['status']}");
         if(res['status'] == 200){
           emit(ViewAllMembersSuccess(membersData: res, userData: userDetail));
         }
         else if (res['status'] == 204){
-          print("emiiting nodata stat from bloc");
+          // print("emiiting nodata stat from bloc");
           emit(ViewAllMembersNoData(message: '${res['message']}'));
         }
         else{

@@ -373,6 +373,25 @@ class SignupPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SplashScreenPage]
+class SplashScreenPageRoute extends PageRouteInfo<void> {
+  const SplashScreenPageRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashScreenPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashScreenPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return SplashScreenPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ViewAll]
 class ViewAllRoute extends PageRouteInfo<ViewAllRouteArgs> {
   ViewAllRoute({

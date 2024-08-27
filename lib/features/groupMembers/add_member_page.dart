@@ -44,7 +44,7 @@ class _AddMemberPageState extends State<AddMemberPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('the member list is $_addedMembers');
+    // print('the member list is $_addedMembers');
 
     return BlocProvider(
       create: (context) => AddMemberBloc(
