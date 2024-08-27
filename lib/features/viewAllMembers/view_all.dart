@@ -79,9 +79,48 @@ class _ViewAllState extends State<ViewAll> {
                         },
                         child: BlocBuilder<ViewAllBloc, ViewAllState>(
                             buildWhen: (previous, current) =>
-                                current is ViewAllMembersSuccess,
+                                current is ViewAllMembersSuccess || current is ViewAllMembersNoData,
                             builder: (context, state) {
-                              if (state is ViewAllMembersSuccess) {
+                              if(state is ViewAllMembersLoading){
+                                return Center(
+                                  child : CircularProgressIndicator(),
+
+                                );
+                              }
+                              else if(state is ViewAllMembersNoData){
+
+                                print("here in main file to nodata state");
+
+                                return Center(
+                                child: Column(children: [
+                                Padding(
+                                padding: const EdgeInsets.all(16.0),
+                              child: Center(
+                              child: Text("No Members Found \nPlease add members in the group",
+                                  textAlign: TextAlign.center, // Center the text within the Text widget
+
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                              ),
+                              ),
+                              ]));
+
+                                    // child :  Text("No Members Found \nPlease add members in the group",
+                                    //     textAlign: TextAlign.center, // Center the text within the Text widget
+                                    //
+                                    //     style: TextStyle(
+                                    //       fontSize: 20.0,
+                                    //       fontWeight: FontWeight.bold,
+                                    //     )
+                                    // )
+                                // );
+                              }
+                              else if (state is ViewAllMembersSuccess) {
+                                // if(state.membersData["data"] == [])
+                                //   return Text("No Members Found");
                                 return Expanded(
                                     child: Column(
                                         crossAxisAlignment:
@@ -92,33 +131,64 @@ class _ViewAllState extends State<ViewAll> {
                                         userEmail: state.userData["user_email"],
                                       ),
                                       SizedBox(height: 16.0),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'All Members',
-                                          style: TextStyle(
-                                            fontSize:
-                                                20.0, // Adjust the font size as needed
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.0),
+                                      // Text("All Members"),
+                                      // Align(
+                                      //   alignment: Alignment.center,
+                                      //   child: Text(
+                                      //     'All Members',
+                                      //     style: TextStyle(
+                                      //       fontSize:
+                                      //           20.0, // Adjust the font size as needed
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // SizedBox(height: 16.0),
                                       Padding(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 16, vertical: 8),
-                                        child: Row(
-                                            mainAxisAlignment:
+                                        child: Column(
+                                          children: [
+                                            // Align(
+                                            //   alignment: Alignment.topLeft,
+                                            //   child: Text(
+                                            //     'All Members',
+                                            //     style: TextStyle(
+                                            //       fontSize:
+                                            //           20.0, // Adjust the font size as needed
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            //  SizedBox(height: 16.0),
+
+
+
+                                            Row(
+                                                mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                widget.groupName,
-                                                style: TextStyle(fontSize: 20),
-                                              ),
-                                              // Text(
-                                              //   'Admin : ${widget.groupAdminName}',
-                                              //   style: TextStyle(color: Colors.cyan, fontSize: 18),
-                                              // )
-                                            ]),
+                                                children: [
+                                                  Align(
+                                                    alignment: Alignment.topLeft,
+                                                    child: Text(
+                                                      'All Members',
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                        20.0, // Adjust the font size as needed
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    widget.groupName,
+                                                    style: TextStyle(fontSize: 20),
+                                                  ),
+                                                  // Text(
+                                                  //   'Admin : ${widget.groupAdminName}',
+                                                  //   style: TextStyle(color: Colors.cyan, fontSize: 18),
+                                                  // )
+                                                ]),
+                                          ],
+                                        )
+
                                         // Add Members button
                                       ),
                                       Expanded(
@@ -180,11 +250,7 @@ class _ViewAllState extends State<ViewAll> {
                                                         if (member["is_admin"] == true)
                                                           Container(
                                                             padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        8,
-                                                                    vertical:
-                                                                        4),
+                                                                .symmetric(horizontal: 8, vertical: 4),
                                                             decoration:
                                                                 BoxDecoration(
                                                               color:
@@ -208,6 +274,11 @@ class _ViewAllState extends State<ViewAll> {
                                                               ),
                                                             ),
                                                           ),
+
+
+                                                        // if( member["member_id"] == state.userData["user_id"])
+                                                        if(member["is_admin"] == false)
+
                                                         IconButton(
                                                           icon: Icon(
                                                               Icons.delete,
@@ -216,9 +287,7 @@ class _ViewAllState extends State<ViewAll> {
                                                           onPressed: () {
                                                             // Handle the delete action
                                                             // print("button clicked");
-                                                            context
-                                                                .read<
-                                                                    ViewAllBloc>().add(DeleteMemberEvent(
+                                                            context.read<ViewAllBloc>().add(DeleteMemberEvent(
                                                                     group_id: widget.groupId,
                                                                     member_id: member_id,
                                                                     group_admin_id: widget.groupAdminId));
@@ -231,6 +300,7 @@ class _ViewAllState extends State<ViewAll> {
                                       ),
                                     ]));
                               }
+
                               // return Text("in else");
                               else if (state is ViewAllMembersFailure) {
                                 return Center(
@@ -254,24 +324,17 @@ class _ViewAllState extends State<ViewAll> {
 
 
                                 );
-                              } else {
+                              }
+                              else {
                                 return Center(
-
-                                  child : Column(
-                                    children : [
-                                      Text(
-                                        "No members found",
-                                        style: TextStyle(
-                                          fontSize:
-                                          20.0, // Adjust the font size as needed
+                                    child: Column(children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
                                         ),
                                       ),
-                                      Text("Please add members in the group")
-
-                                    ]
-                                  )
-
-                                );
+                                    ]));
                               }
                             }),
                       )

@@ -3,10 +3,13 @@ import 'package:frontend/repository/models/all_groups_data.dart';
 import '../dio.dart';
 import 'package:frontend/repository/services/auth_service/auth_storage.dart';
 import 'dart:convert';
+import 'dart:io';
+
 
 class GroupDetails {
   final Api api = Api();
   final AuthStorage _authStorage = AuthStorage();
+  final String Base_url = Platform.isAndroid ? "http://10.0.2.2:8080" : "http://localhost:8080";
 
   // Future<dynamic> getGroupsByUserid() async {
   Future<AllGroupsData> getGroupsByUserid() async {
@@ -14,12 +17,14 @@ class GroupDetails {
     print("first of all calling api here");
 
     try {
+
+      print("my url, ${Base_url}");
       // Response getUserInfo = await _authStorage.retrieveData();
       final userInfo = await _authStorage.retrieveData();
       var mytoken = await _authStorage.getToken('token');
       var user_id = userInfo['user_id'];
       Response res =
-          await api.dio.get('http://localhost:8080/group/all/$user_id',
+          await api.dio.get('${Base_url}/group/all/$user_id',
               options: Options(
                 headers: {'Authorization': 'Bearer $mytoken'},
               ));
@@ -63,7 +68,7 @@ class GroupDetails {
       final userInfo = await _authStorage.retrieveData();
       var mytoken = await _authStorage.getToken('token');
 
-      Response res = await api.dio.post('http://localhost:8080/group',
+      Response res = await api.dio.post('${Base_url}/group',
           options: Options(
             headers: {'Authorization': 'Bearer $mytoken'},
           ),
@@ -100,7 +105,7 @@ class GroupDetails {
       final userInfo = await _authStorage.retrieveData();
       var mytoken = await _authStorage.getToken('token');
       Response res = await api.dio.post(
-        'http://localhost:8080/group/add_group_member',
+        '${Base_url}/group/add_group_member',
         options: Options(
           headers: {'Authorization': 'Bearer $mytoken'},
           validateStatus: (status) {
@@ -157,7 +162,7 @@ class GroupDetails {
       var mytoken = await _authStorage.getToken('token');
 
       Response res = await api.dio.get(
-        'http://localhost:8080/group/get_allmembers/$group_id',
+        '${Base_url}/group/get_allmembers/$group_id',
         options: Options(
           headers: {'Authorization': 'Bearer $mytoken'},
           validateStatus: (status) {
@@ -194,7 +199,7 @@ Future<dynamic> deleteMemberFromGroupApi(String group_id, String member_id, Stri
       var mytoken = await _authStorage.getToken('token');
 
       Response res = await api.dio.delete(
-        'http://localhost:8080/group/delete/group_id/$group_id/member_id/$member_id/group_admin_id/$group_admin_id/loggedin_userid/$user_id',
+        '${Base_url}/group/delete/group_id/$group_id/member_id/$member_id/group_admin_id/$group_admin_id/loggedin_userid/$user_id',
         options: Options(
           headers: {'Authorization': 'Bearer $mytoken'},
           validateStatus: (status) {
@@ -235,7 +240,7 @@ Future<dynamic> deleteMemberFromGroupApi(String group_id, String member_id, Stri
       var mytoken = await _authStorage.getToken('token');
 
       Response res = await api.dio.get(
-        'http://localhost:8080/expense/allexpenses/$group_id/user_id/$user_id',
+        '${Base_url}/expense/allexpenses/$group_id/user_id/$user_id',
         options: Options(
           headers: {'Authorization': 'Bearer $mytoken'},
           validateStatus: (status) {
@@ -270,7 +275,7 @@ Future <dynamic> getExpenseSummaryOfGroupApi(String group_id, String user_id) as
     var mytoken = await _authStorage.getToken('token');
 
     Response res = await api.dio.get(
-      'http://localhost:8080/expense/expensedata/group_id/$group_id/user_id/$user_id',
+      '${Base_url}/expense/expensedata/group_id/$group_id/user_id/$user_id',
       options: Options(
         headers: {'Authorization': 'Bearer $mytoken'},
         validateStatus: (status) {

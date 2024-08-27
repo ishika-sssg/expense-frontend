@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/common/navbar.dart';
 import 'package:frontend/repository/services/auth_service/auth_api.dart';
 import 'package:frontend/features/login/login_page.dart';
+import 'package:frontend/repository/services/auth_service/auth_storage.dart';
+
 
 import './core/signup_bloc.dart';
 import './core/signup_event.dart';
@@ -135,6 +137,23 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _checkIfLoggedIn();
+  }
+  void _checkIfLoggedIn() async {
+    AuthStorage authStorage = AuthStorage();
+    // Call retrieveData from authstorage.dart to get the value
+    var data = await authStorage.retrieveData() ;
+    print(data);
+    if (data["user_email"] != null && data["user_name"] != null) {
+      // Navigator.pushReplacementNamed(context, '/profile');
+      // print("user is already logged in ");
+      await AutoRouter.of(context).replaceAll([const ProfilePageRoute()]);
+    }
+  }
+
+
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (BuildContext context) => SignupBloc(authApi: AuthApi()),

@@ -7,6 +7,7 @@ class ViewAllState extends Equatable{
 }
 final class ViewAllInitial extends ViewAllState {}
 
+final class ViewAllMembersLoading extends ViewAllState{}
 final class ViewAllMembersSuccess extends ViewAllState{
   final dynamic membersData;
   final dynamic userData;
@@ -15,7 +16,12 @@ final class ViewAllMembersSuccess extends ViewAllState{
   List<Object> get props => [membersData, userData];
 }
 
-
+final class ViewAllMembersNoData extends ViewAllState{
+  final dynamic message;
+  ViewAllMembersNoData({required this.message});
+  @override
+  List<Object> get props => [message];
+}
 final class ViewAllMembersFailure extends ViewAllState{
   final dynamic message;
   ViewAllMembersFailure({required this.message});

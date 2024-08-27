@@ -36,7 +36,7 @@ try{
     emit(GetAllGroupMembersState(allMembersData: res["data"]["details"]));
   }
   else if(res['status'] == 204){
-    emit(GetAllGroupMembersErrorState(message: res["message"]));
+    emit(AddExpenseNoMemberState(message: res["message"]));
   }
   else{
     emit(GetAllGroupMembersErrorState(message: res["message"]));
@@ -57,7 +57,8 @@ try{
           print('res from add expense bloc $res');
           if(res['status'] == 200){
             emit(AddExpenseSubmittedState(expense: res['data']));
-          }else{
+          }
+          else{
             emit(AddExpenseErrorState(message: res['message']));
           }
         }catch(err){

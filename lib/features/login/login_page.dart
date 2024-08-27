@@ -7,6 +7,8 @@ import 'core/login_event.dart';
 import 'core/login_state.dart';
 import 'package:frontend/repository/services/auth_service/auth_api.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:frontend/repository/services/auth_service/auth_storage.dart';
+
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -51,8 +53,18 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _checkIfLoggedIn();
   }
+  void _checkIfLoggedIn() async {
+    AuthStorage authStorage = AuthStorage();
+    // Call retrieveData from authstorage.dart to get the value
+    var data = await authStorage.retrieveData() ;
 
+    if (data["isLoggedIn"] == true) {
+      // Navigator.pushReplacementNamed(context, '/profile');
+      print("user is already logged in ");
+    }
+  }
   @override
   void dispose() {
     // _emailFocusNode.dispose();

@@ -18,6 +18,7 @@ class ViewAllBloc extends Bloc<ViewAllEvent, ViewAllState> {
 
     on<GetAllMembersEvent>((GetAllMembersEvent event, Emitter<ViewAllState> emit) async{
       print("from getall member bloc file ${event.group_id}");
+      emit(ViewAllMembersLoading());
 
       try{
         final res = await groupDetails.getAllMembersOfGroupApi(event.group_id);
@@ -30,7 +31,8 @@ class ViewAllBloc extends Bloc<ViewAllEvent, ViewAllState> {
           emit(ViewAllMembersSuccess(membersData: res, userData: userDetail));
         }
         else if (res['status'] == 204){
-          emit(ViewAllMembersFailure(message: '${res['message']}'));
+          print("emiiting nodata stat from bloc");
+          emit(ViewAllMembersNoData(message: '${res['message']}'));
         }
         else{
           emit(ViewAllMembersFailure(message: '${res['message']}'));
@@ -46,7 +48,7 @@ class ViewAllBloc extends Bloc<ViewAllEvent, ViewAllState> {
 
     on<DeleteMemberEvent>((DeleteMemberEvent event, Emitter<ViewAllState> emit) async{
 
-      print("from getall member bloc file delete event ${event.group_id} ${event.member_id}");
+      // print("from getall member bloc file delete event ${event.group_id} ${event.member_id}");
       try{
         final res = await groupDetails.deleteMemberFromGroupApi(event.group_id, event.member_id, event.group_admin_id);
         if(res['status'] == 200){

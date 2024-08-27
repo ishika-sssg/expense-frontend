@@ -54,6 +54,13 @@ final class AddExpenseSubmittedState extends AddExpenseState{
   List<Object> get props => [expense];
 }
 
+final class AddExpenseNoMemberState extends AddExpenseState{
+  final String message;
+  AddExpenseNoMemberState({required this.message});
+  @override
+  List<Object> get props => [message];
+}
+
 final class AddExpenseErrorState extends AddExpenseState{
   final String message;
   AddExpenseErrorState({required this.message});

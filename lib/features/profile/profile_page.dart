@@ -175,7 +175,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         //
                         // );
                         } else {
-                        return SizedBox.shrink();
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                         }
                       },
 

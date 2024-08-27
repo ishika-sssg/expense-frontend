@@ -62,7 +62,8 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                                   ),
                                   ElevatedButton.icon(
                                       onPressed: ()async{
-                                        await expenseDetails.RequestPermission(state.userData["user_id"].toString());
+                                        // await expenseDetails.RequestPermission(state.userData["user_id"].toString());
+                                        await expenseDetails.newDownload(state.userData["user_id"].toString());
                                         print("download button");
                                       },
                                     icon: const Icon(Icons.download),
@@ -195,7 +196,7 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                     else if (state is AllSettlementFailure) {
                       return Center(
                         child: Text(
-                          "No settlements yet",
+                          "No settlements Found",
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -205,12 +206,7 @@ class _ViewSettlementPageState extends State<ViewSettlementPage> {
                       );
                     } else {
                       return Center(
-                        child: Text(
-                          "No Settlements Found",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
+                        child: CircularProgressIndicator(),
                       );
                     }
                   }),

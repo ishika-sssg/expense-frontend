@@ -28,20 +28,23 @@ Future<void> clearAll()async{
   await prefs.remove('user_id');
   await prefs.remove('user_name');
   await prefs.remove('user_email');
+  await prefs.remove("isLoggedIn");
 
 }
 
 // save logged in user details in shared preferences :
-   Future<dynamic> storeData(int userId, String user_name, String user_email) async {
+   Future<dynamic> storeData(int userId, String user_name, String user_email, bool isLoggedIn) async {
      SharedPreferences prefs = await SharedPreferences.getInstance();
      await prefs.setInt('user_id', userId);
      await prefs.setString('user_name', user_name);
      await prefs.setString('user_email', user_email);
+     await prefs.setBool("isLoggedIn", isLoggedIn);
 
      return {
        'user_id': userId,
        'user_email': user_email,
        'user_name': user_name,
+       "isLoggedIn" : isLoggedIn,
      };
 
    }

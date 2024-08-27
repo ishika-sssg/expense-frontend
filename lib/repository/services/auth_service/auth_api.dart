@@ -1,6 +1,11 @@
 import 'package:dio/dio.dart';
 import './auth_storage.dart';
 import '../dio.dart';
+import 'package:platform/platform.dart';
+import 'dart:convert';
+import 'dart:io';
+
+
 
 
 class AuthApi {
@@ -10,13 +15,24 @@ class AuthApi {
 
   // _dio.interceptors.add(LogInterceptor());
 final AuthStorage _authStorage = AuthStorage();
+// for andriod
+ final Base_url = "http://10.0.2.2:8080";
+  // final Base_url = "http://localhost:8080";
+
+
+  // for ios simulator :
+  // final Base_url_ios = "http://localhost:8080";
+  // final String Base_url = Platform.isAndroid ? "http://10.0.2.2:8080" : "http://localhost:8080";
+
 
 
   Future<dynamic> registerUser(String username, String email,
       String password) async {
+
+
     try {
       Response response = await api.dio.post(
-        'http://localhost:8080/auth/register',
+        '${Base_url}/auth/register',
         data: {
           'name': username,
           'email': email,
@@ -58,7 +74,7 @@ final AuthStorage _authStorage = AuthStorage();
   Future<dynamic> loginUser(String email, String password) async {
     try {
       Response res = await api.dio.post(
-          'http://localhost:8080/auth/login',
+          '${Base_url}/auth/login',
         // 'http://10.0.2.2:43802/auth/login',
           data: {
             'email': email,
@@ -72,13 +88,15 @@ final AuthStorage _authStorage = AuthStorage();
         // store token :
         var val = await _authStorage.saveToken("token", info['token']);
         // print(info['user']['user_name']);
-        var save_details = await _authStorage.storeData(info['user']['ID'] , info['user']['user_name'], info['user']['email']);
-        // print('saved $save_details');
+        var save_details = await _authStorage.storeData(info['user']['ID'] , info['user']['user_name'], info['user']['email'], true);
+        print('saved $save_details');
         return responseData;
       } else {
         return 'Error: ${res.statusCode}';
       }
     } on DioException catch (err) {
+
+      print("erro in exception block");
       print('DioError: ${err.response?.data}');
       return err.response?.data ?? 'Unknown error';
     } catch (err) {

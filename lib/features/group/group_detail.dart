@@ -114,33 +114,38 @@ class _GroupDetailState extends State<GroupDetailPage> {
                         child: Text("Settle Up"),
                       ),
                       SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await AutoRouter.of(context).push(
-                            AddMemberPageRoute(
-                              groupId: widget.groupId,
-                              groupName: widget.groupName,
-                              groupAdminId: widget.groupAdminId,
-                              groupAdminName: widget.groupAdminName,
-                            ),
-                          );
-                        },
-                        child: Text("Add Members"),
-                      ),
-                      // SizedBox(width: 10),
-                      // ElevatedButton(
-                      //   onPressed: () async {
-                      //     await AutoRouter.of(context).push(
-                      //       AddExpensePageRoute(
-                      //         groupId: widget.groupId,
-                      //         groupName: widget.groupName,
-                      //         groupAdminId: widget.groupAdminId,
-                      //         groupAdminName: widget.groupAdminName,
-                      //       ),
-                      //     );
-                      //   },
-                      //   child: Text("Add Expense"),
-                      // ),
+                        ElevatedButton(
+                          onPressed: () async {
+
+                            AuthStorage storage = AuthStorage(); // Assuming authStorage has the retrieveData method
+                            final data = await storage.retrieveData();
+                    if (data["user_id"].toString() == widget.groupAdminId) {
+
+                      print(data["user_id"]);
+                      print(widget.groupAdminId);
+// Fetch the logged-in user's ID
+
+                      await AutoRouter.of(context).push(
+                        AddMemberPageRoute(
+                          groupId: widget.groupId,
+                          groupName: widget.groupName,
+                          groupAdminId: widget.groupAdminId,
+                          groupAdminName: widget.groupAdminName,
+                        ),
+                      );
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Only the group admin can add members to the group.'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                          },
+                          child: Text("Add Members"),
+                        ),
+
+
                       SizedBox(width: 10),
                       ElevatedButton(
                         child: Text("View Members"),
@@ -160,13 +165,7 @@ class _GroupDetailState extends State<GroupDetailPage> {
                         onPressed: () async {
                           await AutoRouter.of(context).push(
                             ViewSettlementPageRoute(),
-                            //
-                            // AddExpensePageRoute(
-                            //   groupId: widget.groupId,
-                            //   groupName: widget.groupName,
-                            //   groupAdminId: widget.groupAdminId,
-                            //   groupAdminName: widget.groupAdminName,
-                            // ),
+
                           );
                         },
                         child: Text("View Settlements"),
@@ -175,6 +174,8 @@ class _GroupDetailState extends State<GroupDetailPage> {
                   ),
                 ),
               ),
+
+
               // BlocBuilder for expense list
               Expanded(
                 child: BlocBuilder<GroupDetailBloc, GroupDetailState>(
@@ -240,52 +241,78 @@ class _GroupDetailState extends State<GroupDetailPage> {
                                   else
                                     ...state.expenseSummary["overall_details"]
                                         .map<Widget>((detail) {
-                                      return Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${detail["user_name"]}',
-                                                  style: TextStyle(
-                                                    fontSize: 16.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 10.0),
-                                                Text(
-                                                  detail["status"] ==
-                                                          "needs to pay"
-                                                      ? "owes"
-                                                      : "owes you",
 
-                                                  style: TextStyle(
-                                                    fontSize: 14.0,
 
+
+                                          return InkWell(
+                                            onTap: () async{
+                                              print("block clicked");
+
+                                                await AutoRouter.of(context).push(
+                                                  SettleupPageRoute(
+                                                    groupId: widget.groupId,
+                                                    groupName: widget.groupName,
+                                                    groupAdminId: widget.groupAdminId,
+                                                    groupAdminName: widget.groupAdminName,
+                                                    groupDescription: widget.groupDescription,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              '\$${detail["net_amount"].toStringAsFixed(2)}',
-                                              style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold,
-                                                color: detail["status"] ==
-                                                        "needs to pay"
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                                                );
+                                            },
+                                            child:  Padding(
+
+                                          padding:
+                                          EdgeInsets.symmetric(vertical: 5.0),
+                                      child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                      Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                      Text(
+                                      '${detail["user_name"]}',
+                                      style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      ),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Text(
+                                      detail["status"] ==
+                                      "needs to pay"
+                                      ? "owes"
+                                          : "owes you",
+
+                                      style: TextStyle(
+                                      fontSize: 14.0,
+
+                                      ),
+                                      ),
+                                      ],
+                                      ),
+                                      Text(
+                                      '\$${detail["net_amount"].toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: detail["status"] ==
+                                      "needs to pay"
+                                      ? Colors.red
+                                          : Colors.green,
+                                      ),
+                                      ),
+                                      ],
+                                      ),
+                                      )
+                                          );
+
+
+
+
+
+
+
                                     }).toList(),
                                 ],
                               ),
